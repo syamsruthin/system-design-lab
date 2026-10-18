@@ -4,7 +4,7 @@ Learning system design end to end, one runnable lab at a time. Every topic is ex
 once technically and once like you're five with a real-world example, and then **proven with code** you
 run and break yourself (Python + Docker, all free tools).
 
-**[📊 Progress dashboard](https://YOUR-GITHUB-USERNAME.github.io/system-design-lab/)**
+**[📊 Progress dashboard](https://syamsruthin.github.io/system-design-lab/)**
 
 <!-- PROGRESS:START -->
 ![progress](https://img.shields.io/badge/progress-0.0%25-2a78d6)
@@ -89,12 +89,11 @@ uv run python scripts/build_dashboard.py
 
 ### Publish the dashboard
 
-1. Push to GitHub.
-2. Go to **Settings → Pages → Build and deployment**, set Source to **Deploy from a branch**, then
-   choose `main` and `/docs`.
-3. Replace `YOUR-GITHUB-USERNAME` in the link above.
+One-time setup: in **Settings → Pages → Build and deployment**, set Source to **GitHub Actions**.
 
-The GitHub Action in `.github/workflows/dashboard.yml` rebuilds the dashboard on every push.
+From then on, `.github/workflows/dashboard.yml` builds the dashboard from `progress.json` and deploys it
+on every push, and again daily so "today's plan" and reviews due stay current. It never commits to the
+repo, so `git push` after `/done` always goes through cleanly.
 
 ## Layout
 
