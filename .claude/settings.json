@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run python scripts/tracker.py:*)",
+      "Bash(uv run python scripts/build_dashboard.py:*)",
+      "Bash(uv run python -m pytest:*)",
+      "Bash(uv run python -m src.demo:*)",
+      "Bash(uv add:*)",
+      "Bash(uv sync:*)",
+      "Bash(make:*)",
+      "Bash(docker info:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker ps:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}

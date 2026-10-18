@@ -1,0 +1,846 @@
+{
+  "version": 1,
+  "topics": {
+    "how-the-web-works": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "dns": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "http-rest": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "rest-grpc-graphql": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "latency-throughput": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "back-of-envelope": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "cap-pacelc": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "consistency-models": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "vertical-vs-horizontal": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "load-balancing": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "reverse-proxy": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "api-gateway": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "cdn": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "autoscaling": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "caching-basics": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "eviction-policies": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "cache-strategies": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "cache-invalidation": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "cache-stampede": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "redis-patterns": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "sql-vs-nosql": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "acid-transactions": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "isolation-levels": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "indexing-btree": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "lsm-trees": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "normalization": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "connection-pooling": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "replication": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "replication-lag": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "sharding": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "consistent-hashing": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "queues-vs-pubsub": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "dead-letter-queues": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "kafka-fundamentals": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "idempotency": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "delivery-semantics": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "backpressure": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "outbox-pattern": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "clocks": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "quorum": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "gossip": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "leader-election": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "raft": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "distributed-locks": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "two-phase-commit": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "saga": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "crdts": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "bloom-filter": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "hyperloglog": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "count-min-sketch": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "merkle-tree": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "trie": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "geohash-quadtree": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "unique-ids": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "inverted-index": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "timeouts-deadlines": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "retries-backoff": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "rate-limiting": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "circuit-breaker": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "bulkhead": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "health-checks": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "chaos-engineering": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "observability": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "slos": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "monolith-vs-microservices": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "service-discovery": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "realtime-communication": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "object-storage": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "event-driven-architecture": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "cqrs": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "event-sourcing": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "batch-vs-stream": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-url-shortener": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-rate-limiter": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-notification-system": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-typeahead": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-key-value-store": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-chat-system": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-news-feed": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-web-crawler": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-job-scheduler": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-video-streaming": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-payment-system": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    },
+    "design-ride-sharing": {
+      "status": "todo",
+      "started": null,
+      "completed": null,
+      "minutes": null,
+      "quiz": [],
+      "confidence": null,
+      "reviews": 0,
+      "next_review": null
+    }
+  },
+  "log": []
+}

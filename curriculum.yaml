@@ -1,0 +1,147 @@
+# System Design Lab — curriculum
+#
+# Each topic:
+#   id          unique slug (also the lesson folder suffix)
+#   title       human-readable name
+#   difficulty  1 (gentle) .. 5 (deep). Drives daily pacing: easy topics get batched, hard ones get a day.
+#   minutes     estimated study time: read + run + break-it + quiz
+#   prereqs     topic ids that should be done first
+#   docker      true if the lesson needs Docker Compose infrastructure
+#   tools       infra / libraries the lesson is expected to use
+#
+# Add topics freely; run `uv run python scripts/tracker.py sync` afterwards.
+
+modules:
+  - id: "00"
+    slug: foundations
+    title: Foundations
+    topics:
+      - { id: how-the-web-works, title: "Client-Server & the Request Lifecycle", difficulty: 1, minutes: 30, prereqs: [], docker: false, tools: [fastapi, httpx] }
+      - { id: dns, title: "DNS Resolution & TTLs", difficulty: 1, minutes: 30, prereqs: [how-the-web-works], docker: false, tools: [dnspython] }
+      - { id: http-rest, title: "HTTP, REST & Status Codes", difficulty: 1, minutes: 40, prereqs: [how-the-web-works], docker: false, tools: [fastapi] }
+      - { id: rest-grpc-graphql, title: "REST vs gRPC vs GraphQL", difficulty: 2, minutes: 60, prereqs: [http-rest], docker: false, tools: [grpcio, strawberry-graphql] }
+      - { id: latency-throughput, title: "Latency, Throughput & Percentiles (p50/p99)", difficulty: 2, minutes: 45, prereqs: [http-rest], docker: false, tools: [asyncio] }
+      - { id: back-of-envelope, title: "Back-of-the-Envelope Estimation", difficulty: 2, minutes: 45, prereqs: [latency-throughput], docker: false, tools: [] }
+      - { id: cap-pacelc, title: "CAP & PACELC Theorems", difficulty: 3, minutes: 60, prereqs: [latency-throughput], docker: false, tools: [] }
+      - { id: consistency-models, title: "Consistency Models (Strong, Eventual, Causal)", difficulty: 3, minutes: 60, prereqs: [cap-pacelc], docker: false, tools: [] }
+
+  - id: "01"
+    slug: scaling-and-traffic
+    title: Scaling & Traffic
+    topics:
+      - { id: vertical-vs-horizontal, title: "Vertical vs Horizontal Scaling & Statelessness", difficulty: 1, minutes: 40, prereqs: [http-rest], docker: true, tools: [docker-compose, fastapi] }
+      - { id: load-balancing, title: "Load Balancing Algorithms", difficulty: 2, minutes: 60, prereqs: [vertical-vs-horizontal], docker: false, tools: [] }
+      - { id: reverse-proxy, title: "Reverse Proxy & L4/L7 Load Balancers", difficulty: 2, minutes: 60, prereqs: [load-balancing], docker: true, tools: [nginx, haproxy] }
+      - { id: api-gateway, title: "API Gateway Pattern", difficulty: 2, minutes: 60, prereqs: [reverse-proxy], docker: true, tools: [nginx, fastapi] }
+      - { id: cdn, title: "CDNs & Edge Caching", difficulty: 2, minutes: 45, prereqs: [reverse-proxy], docker: true, tools: [nginx] }
+      - { id: autoscaling, title: "Autoscaling & Capacity Planning", difficulty: 3, minutes: 60, prereqs: [load-balancing, back-of-envelope], docker: false, tools: [simpy] }
+
+  - id: "02"
+    slug: caching
+    title: Caching
+    topics:
+      - { id: caching-basics, title: "Caching Fundamentals & Hit Ratio", difficulty: 1, minutes: 30, prereqs: [latency-throughput], docker: false, tools: [] }
+      - { id: eviction-policies, title: "Eviction Policies: LRU, LFU, TTL", difficulty: 2, minutes: 45, prereqs: [caching-basics], docker: false, tools: [] }
+      - { id: cache-strategies, title: "Cache-Aside, Read/Write-Through, Write-Back", difficulty: 2, minutes: 60, prereqs: [caching-basics], docker: true, tools: [redis, postgres] }
+      - { id: cache-invalidation, title: "Cache Invalidation & Consistency", difficulty: 3, minutes: 60, prereqs: [cache-strategies], docker: true, tools: [redis, postgres] }
+      - { id: cache-stampede, title: "Thundering Herd & Cache Stampede", difficulty: 3, minutes: 60, prereqs: [cache-strategies], docker: true, tools: [redis] }
+      - { id: redis-patterns, title: "Redis Data Structures & Patterns", difficulty: 2, minutes: 60, prereqs: [cache-strategies], docker: true, tools: [redis] }
+
+  - id: "03"
+    slug: databases
+    title: Databases
+    topics:
+      - { id: sql-vs-nosql, title: "SQL vs NoSQL: Choosing a Data Model", difficulty: 1, minutes: 45, prereqs: [http-rest], docker: true, tools: [postgres, mongodb] }
+      - { id: acid-transactions, title: "ACID & Transactions", difficulty: 2, minutes: 60, prereqs: [sql-vs-nosql], docker: true, tools: [postgres] }
+      - { id: isolation-levels, title: "Isolation Levels & Anomalies", difficulty: 4, minutes: 75, prereqs: [acid-transactions], docker: true, tools: [postgres] }
+      - { id: indexing-btree, title: "Indexing & B-Trees", difficulty: 3, minutes: 60, prereqs: [sql-vs-nosql], docker: true, tools: [postgres] }
+      - { id: lsm-trees, title: "LSM Trees & SSTables", difficulty: 4, minutes: 75, prereqs: [indexing-btree], docker: false, tools: [] }
+      - { id: normalization, title: "Normalization vs Denormalization", difficulty: 2, minutes: 45, prereqs: [sql-vs-nosql], docker: true, tools: [postgres] }
+      - { id: connection-pooling, title: "Connection Pooling", difficulty: 2, minutes: 45, prereqs: [acid-transactions], docker: true, tools: [postgres, pgbouncer] }
+      - { id: replication, title: "Replication: Leader-Follower, Multi-Leader, Leaderless", difficulty: 3, minutes: 75, prereqs: [acid-transactions, consistency-models], docker: true, tools: [postgres] }
+      - { id: replication-lag, title: "Replication Lag & Read-Your-Writes", difficulty: 3, minutes: 60, prereqs: [replication], docker: true, tools: [postgres] }
+      - { id: sharding, title: "Partitioning & Sharding Strategies", difficulty: 3, minutes: 60, prereqs: [replication], docker: false, tools: [] }
+      - { id: consistent-hashing, title: "Consistent Hashing", difficulty: 3, minutes: 60, prereqs: [sharding], docker: false, tools: [] }
+
+  - id: "04"
+    slug: messaging
+    title: Messaging & Async
+    topics:
+      - { id: queues-vs-pubsub, title: "Message Queues vs Pub/Sub", difficulty: 2, minutes: 60, prereqs: [http-rest], docker: true, tools: [rabbitmq] }
+      - { id: dead-letter-queues, title: "Retries & Dead Letter Queues", difficulty: 2, minutes: 45, prereqs: [queues-vs-pubsub], docker: true, tools: [rabbitmq] }
+      - { id: kafka-fundamentals, title: "Kafka: Topics, Partitions, Consumer Groups", difficulty: 3, minutes: 75, prereqs: [queues-vs-pubsub], docker: true, tools: [redpanda] }
+      - { id: idempotency, title: "Idempotency Keys", difficulty: 2, minutes: 45, prereqs: [queues-vs-pubsub], docker: true, tools: [redis, fastapi] }
+      - { id: delivery-semantics, title: "At-Most / At-Least / Exactly-Once Delivery", difficulty: 4, minutes: 75, prereqs: [kafka-fundamentals, idempotency], docker: true, tools: [redpanda] }
+      - { id: backpressure, title: "Backpressure & Load Shedding", difficulty: 3, minutes: 60, prereqs: [queues-vs-pubsub], docker: false, tools: [asyncio] }
+      - { id: outbox-pattern, title: "Transactional Outbox & Change Data Capture", difficulty: 4, minutes: 75, prereqs: [delivery-semantics, acid-transactions], docker: true, tools: [postgres, redpanda] }
+
+  - id: "05"
+    slug: distributed-systems
+    title: Distributed Systems
+    topics:
+      - { id: clocks, title: "Physical, Lamport & Vector Clocks", difficulty: 4, minutes: 75, prereqs: [consistency-models], docker: false, tools: [] }
+      - { id: quorum, title: "Quorum Reads & Writes (N, R, W)", difficulty: 3, minutes: 60, prereqs: [replication], docker: false, tools: [] }
+      - { id: gossip, title: "Gossip Protocols & Failure Detection", difficulty: 3, minutes: 60, prereqs: [quorum], docker: false, tools: [asyncio] }
+      - { id: leader-election, title: "Leader Election", difficulty: 4, minutes: 75, prereqs: [gossip], docker: true, tools: [etcd] }
+      - { id: raft, title: "Raft Consensus", difficulty: 5, minutes: 120, prereqs: [leader-election], docker: false, tools: [asyncio] }
+      - { id: distributed-locks, title: "Distributed Locks & Fencing Tokens", difficulty: 4, minutes: 75, prereqs: [leader-election], docker: true, tools: [redis, etcd] }
+      - { id: two-phase-commit, title: "Two-Phase Commit", difficulty: 4, minutes: 75, prereqs: [acid-transactions], docker: false, tools: [] }
+      - { id: saga, title: "Saga Pattern (Choreography & Orchestration)", difficulty: 4, minutes: 75, prereqs: [two-phase-commit, queues-vs-pubsub], docker: true, tools: [rabbitmq] }
+      - { id: crdts, title: "CRDTs (Conflict-Free Replicated Data Types)", difficulty: 5, minutes: 90, prereqs: [clocks], docker: false, tools: [] }
+
+  - id: "06"
+    slug: data-structures-at-scale
+    title: Data Structures at Scale
+    topics:
+      - { id: bloom-filter, title: "Bloom Filters", difficulty: 2, minutes: 45, prereqs: [caching-basics], docker: false, tools: [] }
+      - { id: hyperloglog, title: "HyperLogLog (Cardinality Estimation)", difficulty: 3, minutes: 60, prereqs: [bloom-filter], docker: true, tools: [redis] }
+      - { id: count-min-sketch, title: "Count-Min Sketch (Heavy Hitters)", difficulty: 3, minutes: 45, prereqs: [bloom-filter], docker: false, tools: [] }
+      - { id: merkle-tree, title: "Merkle Trees & Anti-Entropy", difficulty: 3, minutes: 60, prereqs: [replication], docker: false, tools: [] }
+      - { id: trie, title: "Tries & Prefix Search", difficulty: 2, minutes: 45, prereqs: [], docker: false, tools: [] }
+      - { id: geohash-quadtree, title: "Geohash & Quadtrees", difficulty: 3, minutes: 75, prereqs: [indexing-btree], docker: false, tools: [] }
+      - { id: unique-ids, title: "Unique IDs: UUID, Snowflake, ULID", difficulty: 2, minutes: 45, prereqs: [sharding], docker: false, tools: [] }
+      - { id: inverted-index, title: "Inverted Index & Full-Text Search", difficulty: 3, minutes: 75, prereqs: [indexing-btree], docker: false, tools: [] }
+
+  - id: "07"
+    slug: reliability
+    title: Reliability & Resilience
+    topics:
+      - { id: timeouts-deadlines, title: "Timeouts & Deadline Propagation", difficulty: 2, minutes: 45, prereqs: [latency-throughput], docker: false, tools: [httpx, asyncio] }
+      - { id: retries-backoff, title: "Retries, Exponential Backoff & Jitter", difficulty: 2, minutes: 45, prereqs: [timeouts-deadlines], docker: false, tools: [tenacity] }
+      - { id: rate-limiting, title: "Rate Limiting: Token Bucket, Leaky Bucket, Windows", difficulty: 3, minutes: 90, prereqs: [redis-patterns], docker: true, tools: [redis, fastapi] }
+      - { id: circuit-breaker, title: "Circuit Breaker", difficulty: 3, minutes: 60, prereqs: [retries-backoff], docker: false, tools: [] }
+      - { id: bulkhead, title: "Bulkheads & Resource Isolation", difficulty: 3, minutes: 45, prereqs: [circuit-breaker], docker: false, tools: [asyncio] }
+      - { id: health-checks, title: "Health Checks, Heartbeats & Graceful Shutdown", difficulty: 2, minutes: 45, prereqs: [reverse-proxy], docker: true, tools: [docker-compose, fastapi] }
+      - { id: chaos-engineering, title: "Chaos Engineering & Fault Injection", difficulty: 3, minutes: 60, prereqs: [circuit-breaker, health-checks], docker: true, tools: [toxiproxy] }
+
+  - id: "08"
+    slug: observability-and-architecture
+    title: Observability & Architecture
+    topics:
+      - { id: observability, title: "Observability: Logs, Metrics, Traces", difficulty: 3, minutes: 90, prereqs: [latency-throughput], docker: true, tools: [prometheus, grafana, jaeger, opentelemetry] }
+      - { id: slos, title: "SLIs, SLOs & Error Budgets", difficulty: 2, minutes: 45, prereqs: [observability], docker: false, tools: [] }
+      - { id: monolith-vs-microservices, title: "Monolith vs Microservices", difficulty: 2, minutes: 60, prereqs: [api-gateway], docker: true, tools: [fastapi] }
+      - { id: service-discovery, title: "Service Discovery", difficulty: 3, minutes: 60, prereqs: [monolith-vs-microservices], docker: true, tools: [consul] }
+      - { id: realtime-communication, title: "Polling, Long Polling, SSE & WebSockets", difficulty: 2, minutes: 60, prereqs: [http-rest], docker: false, tools: [fastapi, websockets] }
+      - { id: object-storage, title: "Object Storage & Presigned URLs", difficulty: 2, minutes: 45, prereqs: [http-rest], docker: true, tools: [minio] }
+      - { id: event-driven-architecture, title: "Event-Driven Architecture", difficulty: 3, minutes: 60, prereqs: [kafka-fundamentals], docker: true, tools: [redpanda] }
+      - { id: cqrs, title: "CQRS", difficulty: 3, minutes: 60, prereqs: [event-driven-architecture], docker: true, tools: [postgres, redpanda] }
+      - { id: event-sourcing, title: "Event Sourcing", difficulty: 4, minutes: 75, prereqs: [cqrs], docker: false, tools: [] }
+      - { id: batch-vs-stream, title: "Batch vs Stream Processing", difficulty: 3, minutes: 60, prereqs: [kafka-fundamentals], docker: true, tools: [redpanda, duckdb] }
+
+  - id: "09"
+    slug: case-studies
+    title: Case Studies
+    topics:
+      - { id: design-url-shortener, title: "Design a URL Shortener", difficulty: 3, minutes: 120, prereqs: [unique-ids, cache-strategies], docker: true, tools: [fastapi, redis, postgres] }
+      - { id: design-rate-limiter, title: "Design a Distributed Rate Limiter", difficulty: 4, minutes: 120, prereqs: [rate-limiting, consistent-hashing], docker: true, tools: [redis, nginx] }
+      - { id: design-notification-system, title: "Design a Notification System", difficulty: 3, minutes: 120, prereqs: [dead-letter-queues, idempotency], docker: true, tools: [rabbitmq, fastapi] }
+      - { id: design-typeahead, title: "Design Search Typeahead", difficulty: 3, minutes: 120, prereqs: [trie, cache-strategies], docker: true, tools: [redis, fastapi] }
+      - { id: design-key-value-store, title: "Design a Distributed Key-Value Store", difficulty: 5, minutes: 150, prereqs: [consistent-hashing, quorum, merkle-tree, gossip], docker: false, tools: [asyncio] }
+      - { id: design-chat-system, title: "Design a Chat System", difficulty: 4, minutes: 150, prereqs: [realtime-communication, kafka-fundamentals], docker: true, tools: [fastapi, websockets, redis] }
+      - { id: design-news-feed, title: "Design a News Feed", difficulty: 4, minutes: 150, prereqs: [cache-strategies, kafka-fundamentals], docker: true, tools: [redis, postgres, redpanda] }
+      - { id: design-web-crawler, title: "Design a Web Crawler", difficulty: 4, minutes: 150, prereqs: [bloom-filter, backpressure], docker: true, tools: [redis, httpx] }
+      - { id: design-job-scheduler, title: "Design a Distributed Job Scheduler", difficulty: 4, minutes: 150, prereqs: [distributed-locks, dead-letter-queues], docker: true, tools: [postgres, redis] }
+      - { id: design-video-streaming, title: "Design Video Streaming (YouTube-lite)", difficulty: 4, minutes: 150, prereqs: [object-storage, cdn], docker: true, tools: [minio, nginx, ffmpeg] }
+      - { id: design-payment-system, title: "Design a Payment System", difficulty: 5, minutes: 150, prereqs: [saga, outbox-pattern, idempotency], docker: true, tools: [postgres, redpanda] }
+      - { id: design-ride-sharing, title: "Design Ride Sharing (Uber-lite)", difficulty: 5, minutes: 150, prereqs: [geohash-quadtree, realtime-communication], docker: true, tools: [redis, fastapi, websockets] }

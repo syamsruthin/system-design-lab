@@ -1,0 +1,30 @@
+name: dashboard
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["docs/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Validate curriculum
+        run: uv run python scripts/tracker.py validate
+      - name: Rebuild dashboard
+        run: uv run python scripts/build_dashboard.py
+      - name: Commit if changed
+        run: |
+          if [[ -n "$(git status --porcelain docs README.md)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+            git add docs README.md
+            git commit -m "chore: rebuild dashboard"
+            git push
+          fi

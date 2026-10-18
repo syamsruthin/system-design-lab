@@ -1,0 +1,38 @@
+# Your timezone: decides what "today" is (also on GitHub Actions, which runs in UTC).
+timezone: Asia/Kolkata
+
+# Pacing — the daily plan adapts to topic difficulty and to how you're actually doing.
+pace:
+  # Study budget per day, in minutes. Easy topics get batched until the budget is used;
+  # a single hard topic can take the whole day.
+  weekday_minutes: 120
+  weekend_minutes: 180
+  max_topics_per_day: 4
+  # Topics at or above this difficulty end the day's batch (deep-focus day).
+  deep_focus_difficulty: 4
+  # Days with no study at all (0=Mon ... 6=Sun). Empty = study every day.
+  rest_days: []
+
+  # Adaptive pacing, based on your last `window` completed topics:
+  #  - time factor: your actual minutes / estimated minutes. Faster than estimates → topics
+  #    "cost" less, so more fit in a day. Slower → fewer.
+  #  - mastery: high quiz average raises the daily budget, low average lowers it and
+  #    pulls revisions forward.
+  adaptive: true
+  window: 5
+  time_factor_min: 0.5
+  time_factor_max: 2.0
+  mastery_boost_above: 85    # avg quiz % above this → budget × 1.15
+  mastery_brake_below: 60    # avg quiz % below this → budget × 0.85
+
+# Spaced repetition: days until the next review after each successful quiz.
+# A score below `pass_score` resets the topic to review tomorrow.
+review:
+  intervals_days: [1, 3, 7, 21, 60]
+  pass_score: 60
+  minutes_per_review: 15
+
+# Dashboard
+dashboard:
+  title: System Design Lab
+  heatmap_weeks: 26

@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Design Lab</title>
+<meta name="description" content="Learning progress dashboard: topics, pace, quiz scores and spaced-repetition reviews.">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --accent: #2a78d6; --track: #cde2fb; --hover: rgba(11,11,11,0.04);
+    --good: #0ca30c; --good-text: #006300; --warning: #fab219; --critical: #d03b3b;
+    --heat-0: #f0efec; --heat-1: #b7d3f6; --heat-2: #6da7ec; --heat-3: #2a78d6; --heat-4: #184f95;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --accent: #3987e5; --track: #0d366b; --hover: rgba(255,255,255,0.05);
+      --good-text: #0ca30c;
+      --heat-0: #2c2c2a; --heat-1: #184f95; --heat-2: #2a78d6; --heat-3: #5598e7; --heat-4: #9ec5f4;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --accent: #3987e5; --track: #0d366b; --hover: rgba(255,255,255,0.05);
+    --good-text: #0ca30c;
+    --heat-0: #2c2c2a; --heat-1: #184f95; --heat-2: #2a78d6; --heat-3: #5598e7; --heat-4: #9ec5f4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 1120px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 24px; }
+  h1 { font-size: 22px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 13px; font-weight: 600; margin: 0 0 12px; color: var(--ink-2); }
+  .sub { color: var(--muted); font-size: 13px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; min-width: 0; }
+  .grid { display: grid; gap: 16px; margin-bottom: 16px; }
+  .g-hero { grid-template-columns: minmax(220px, 1.2fr) 3fr; }
+  .g-2 { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 760px) { .g-hero, .g-2 { grid-template-columns: 1fr; } }
+
+  /* hero + tiles */
+  .hero-value { font-size: 56px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+  .hero-label { color: var(--ink-2); margin-top: 8px; }
+  .meter { height: 8px; border-radius: 4px; background: var(--track); overflow: hidden; margin-top: 16px; }
+  .meter > span { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+  .tile .label { color: var(--ink-2); font-size: 13px; }
+  .tile .value { font-size: 26px; font-weight: 600; margin-top: 4px; }
+  .tile .note { color: var(--muted); font-size: 12px; }
+
+  /* plan lists */
+  .plan-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .budget { color: var(--muted); font-size: 13px; }
+  .group { margin-top: 12px; }
+  .group-title { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  ul.items { list-style: none; margin: 0; padding: 0; }
+  ul.items li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--grid); }
+  ul.items li:first-child { border-top: 0; }
+  .item-title { font-weight: 500; }
+  .item-meta { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .dots { letter-spacing: 1px; color: var(--accent); font-size: 11px; }
+  .empty { color: var(--muted); padding: 8px 0; }
+  .pace { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--grid); color: var(--ink-2); font-size: 13px; }
+
+  /* heatmap */
+  .heat-wrap { overflow-x: auto; padding-bottom: 4px; }
+  .heat { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 12px); gap: 3px; width: max-content; }
+  .heat div { width: 12px; height: 12px; border-radius: 3px; background: var(--heat-0); }
+  .heat div:hover { outline: 2px solid var(--ink-2); outline-offset: 0; }
+  .heat-legend { display: flex; align-items: center; gap: 4px; margin-top: 10px; color: var(--muted); font-size: 12px; }
+  .heat-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+  /* modules */
+  .mod { display: grid; grid-template-columns: minmax(150px, 1.3fr) 2fr 54px 64px 64px; gap: 12px; align-items: center; padding: 8px 0; border-top: 1px solid var(--grid); }
+  .mod:first-of-type { border-top: 0; }
+  .mod .meter { margin-top: 0; }
+  .mod .num { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .mod-head { color: var(--muted); font-size: 12px; border-top: 0; padding-top: 0; }
+  @media (max-width: 600px) { .mod { grid-template-columns: 1fr 1fr 48px; } .mod .opt { display: none; } }
+
+  /* chart */
+  .chart { position: relative; height: 220px; }
+  .chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+  /* table */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
+  .chip { border: 1px solid var(--border); background: transparent; color: var(--ink-2); border-radius: 999px; padding: 4px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .search { margin-left: auto; border: 1px solid var(--border); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 6px 10px; font: inherit; min-width: 180px; }
+  @media (max-width: 600px) { .search { margin-left: 0; width: 100%; } }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 500; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--axis); white-space: nowrap; }
+  td { padding: 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr:hover td { background: var(--hover); }
+  .status { white-space: nowrap; }
+  .status b { font-weight: 700; margin-right: 4px; }
+  .s-done b { color: var(--good); } .s-in-progress b { color: var(--accent); }
+  .s-todo b { color: var(--muted); } .s-due b { color: var(--warning); } .s-weak b { color: var(--critical); }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--muted); }
+
+  /* tooltip */
+  .tip { position: fixed; pointer-events: none; z-index: 10; background: var(--surface); color: var(--ink); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); max-width: 260px; display: none; }
+  .tip strong { display: block; font-size: 14px; }
+  .tip span { color: var(--ink-2); }
+  footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="title">System Design Lab</h1>
+    <div class="sub" id="updated"></div>
+  </header>
+
+  <section class="grid g-hero">
+    <div class="card">
+      <div class="hero-value" id="hero"></div>
+      <div class="hero-label" id="hero-label"></div>
+      <div class="meter" role="img" id="hero-meter"><span></span></div>
+    </div>
+    <div class="card tiles" id="tiles"></div>
+  </section>
+
+  <section class="grid g-2">
+    <div class="card">
+      <div class="plan-head"><h2>Today's plan</h2><span class="budget" id="budget"></span></div>
+      <div id="plan"></div>
+      <div class="pace" id="pace"></div>
+    </div>
+    <div class="card">
+      <h2>Due for revision</h2>
+      <div id="due"></div>
+    </div>
+  </section>
+
+  <section class="card grid">
+    <h2>Study activity <span class="sub" id="heat-total"></span></h2>
+    <div class="heat-wrap" id="heat-wrap"><div class="heat" id="heat" role="img" aria-label="Minutes studied per day"></div></div>
+    <div class="heat-legend" id="heat-legend"></div>
+  </section>
+
+  <section class="grid g-2">
+    <div class="card">
+      <h2>Modules</h2>
+      <div id="modules"></div>
+    </div>
+    <div class="card">
+      <h2>Quiz score, daily average (%)</h2>
+      <div class="chart" id="quiz-chart"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>All topics</h2>
+    <div class="filters" id="filters"></div>
+    <div class="table-wrap"><table id="topics"></table></div>
+  </section>
+
+  <footer>Generated by <span class="mono">scripts/build_dashboard.py</span> from <span class="mono">progress.json</span>.</footer>
+</main>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+
+// ---------- helpers (all text goes through textContent) ----------
+function el(tag, props = {}, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k === 'style') n.style.cssText = v;
+    else n.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null) n.append(k.nodeType ? k : document.createTextNode(String(k)));
+  return n;
+}
+const svgNS = 'http://www.w3.org/2000/svg';
+function s(tag, attrs = {}) { const n = document.createElementNS(svgNS, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); return n; }
+const dots = d => '●'.repeat(d) + '○'.repeat(5 - d);
+const fmtDate = iso => iso ? new Date(iso + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '—';
+const fmtLong = iso => iso ? new Date(iso + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+const tip = document.getElementById('tip');
+function showTip(ev, value, ...lines) {
+  tip.replaceChildren(el('strong', { text: value }), ...lines.map(l => el('div', {}, el('span', { text: l }))));
+  tip.style.display = 'block';
+  const pad = 12, w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = ev.clientX + pad, y = ev.clientY + pad;
+  if (x + w > innerWidth - 8) x = ev.clientX - w - pad;
+  if (y + h > innerHeight - 8) y = ev.clientY - h - pad;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+const hideTip = () => { tip.style.display = 'none'; };
+
+const S = DATA.summary, P = DATA.plan;
+document.getElementById('title').textContent = DATA.title;
+document.title = DATA.title;
+document.getElementById('updated').textContent = 'Updated ' + DATA.generated;
+
+// ---------- hero + tiles ----------
+document.getElementById('hero').textContent = S.percent + '%';
+document.getElementById('hero-label').textContent = `${S.done} of ${S.total} topics complete`;
+const hm = document.getElementById('hero-meter');
+hm.firstElementChild.style.width = S.percent + '%';
+hm.setAttribute('aria-label', `${S.percent}% complete`);
+
+const proj = S.projection;
+const tiles = [
+  ['Streak', S.streak + (S.streak === 1 ? ' day' : ' days'), S.streak ? 'keep it going' : 'start today'],
+  ['Time invested', S.hours + ' h', `${S.in_progress} in progress`],
+  ['Avg quiz score', S.avg_score == null ? '—' : S.avg_score + '%', 'latest score per topic'],
+  ['Reviews due', String(S.due), S.weak.length ? `${S.weak.length} weak topic(s)` : 'spaced repetition'],
+  ['Projected finish', proj.complete ? 'Done 🎉' : (proj.finish ? fmtDate(proj.finish) : '—'),
+    proj.finish ? `${proj.remaining} topics at current pace` : ''],
+];
+document.getElementById('tiles').append(...tiles.map(([l, v, n]) =>
+  el('div', { class: 'tile' }, el('div', { class: 'label', text: l }), el('div', { class: 'value', text: v }), el('div', { class: 'note', text: n }))));
+
+// ---------- today's plan ----------
+document.getElementById('budget').textContent = P.rest_day ? 'Rest day'
+  : `${P.weekday} · ${P.left} of ${P.budget} min left · ${P.planned} planned` + (P.over_budget ? ` (over by ${P.over_budget})` : '');
+function itemRow(title, meta, sub) {
+  return el('li', {}, el('div', {}, el('div', { class: 'item-title', text: title }), sub ? el('div', { class: 'item-meta', text: sub }) : null),
+    el('div', { class: 'item-meta' }, meta));
+}
+const plan = document.getElementById('plan');
+function group(name, items) {
+  if (!items.length) return;
+  plan.append(el('div', { class: 'group' }, el('div', { class: 'group-title', text: name }), el('ul', { class: 'items' }, items)));
+}
+group('Reviews', P.reviews.map(r => itemRow(r.title, `~${r.minutes} min`, `due ${fmtDate(r.due)}`)));
+group('Continue', P.continue.map(t => itemRow(t.title, `~${t.minutes} min`, t.module)));
+group('New', P.new.map(t => itemRow(t.title, el('span', {}, el('span', { class: 'dots', text: dots(t.difficulty) }), ` ~${t.minutes} min`), t.module + (t.docker ? ' · docker' : ''))));
+if (!P.reviews.length && !P.continue.length && !P.new.length) {
+  plan.append(el('div', { class: 'empty', text: P.stretch ? `Today's budget is done. Optional stretch: ${P.stretch.title}` : 'Nothing planned.' }));
+}
+const F = P.factors;
+document.getElementById('pace').textContent =
+  `Pace: weekday ${DATA.pace.weekday_minutes} min, weekend ${DATA.pace.weekend_minutes} min. ` +
+  `Time factor ×${F.time_factor} (your actual time vs estimates), budget ×${F.budget_multiplier}` +
+  (F.avg_score == null ? ' (adapts after 2+ quizzed topics).' : ` (recent quiz avg ${F.avg_score}%).`);
+
+// ---------- due ----------
+const due = document.getElementById('due');
+const dueAll = DATA.topics.filter(t => t.due || t.weak)
+  .sort((a, b) => (a.due ? a.next_review : '9') < (b.due ? b.next_review : '9') ? -1 : 1);
+const dueRows = dueAll.slice(0, 8);
+if (!dueRows.length) due.append(el('div', { class: 'empty', text: S.done ? 'Nothing due. Nice.' : 'Finished topics come back here after 1, 3, 7, 21 and 60 days.' }));
+else due.append(el('ul', { class: 'items' }, dueRows.map(t => itemRow(t.title,
+  t.last_score == null ? '' : `last ${t.last_score}%`, t.due ? `due ${fmtDate(t.next_review)}` : 'weak: low score or confidence'))));
+if (dueAll.length > dueRows.length) due.append(el('div', { class: 'item-meta', style: 'margin-top:8px', text: `+${dueAll.length - dueRows.length} more. Run /revise, or filter "Review due" in the table below.` }));
+
+// ---------- heatmap ----------
+(function heatmap() {
+  const weeks = DATA.heatmap_weeks, act = DATA.activity, today = new Date(DATA.today + 'T00:00:00');
+  const start = new Date(today); start.setDate(start.getDate() - ((today.getDay() + 6) % 7) - (weeks - 1) * 7); // a Monday
+  const bucket = m => m <= 0 ? 0 : m <= 30 ? 1 : m <= 60 ? 2 : m <= 120 ? 3 : 4;
+  const heat = document.getElementById('heat');
+  let total = 0, days = 0;
+  for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
+    const iso = d.toLocaleDateString('en-CA');
+    const a = act[iso] || { minutes: 0, events: [] };
+    total += a.minutes; if (a.minutes || a.events.length) days++;
+    const cell = el('div', { tabindex: '0', 'aria-label': `${iso}: ${a.minutes} minutes` });
+    cell.style.background = `var(--heat-${bucket(a.minutes)})`;
+    const show = ev => showTip(ev, `${a.minutes} min`, fmtLong(iso), ...a.events.slice(0, 4));
+    cell.addEventListener('pointermove', show);
+    cell.addEventListener('focus', () => { const r = cell.getBoundingClientRect(); show({ clientX: r.right, clientY: r.bottom }); });
+    cell.addEventListener('pointerleave', hideTip); cell.addEventListener('blur', hideTip);
+    heat.append(cell);
+  }
+  document.getElementById('heat-total').textContent = `· ${Math.round(total / 6) / 10} h over ${days} active day(s), last ${weeks} weeks`;
+  const lg = document.getElementById('heat-legend');
+  lg.append('Less');
+  for (let i = 0; i <= 4; i++) lg.append(el('i', { style: `background: var(--heat-${i})`, title: ['0', '1–30', '31–60', '61–120', '120+'][i] + ' min' }));
+  lg.append('More  (0 · ≤30 · ≤60 · ≤120 · 120+ min)');
+  const wrap = document.getElementById('heat-wrap'); wrap.scrollLeft = wrap.scrollWidth;
+})();
+
+// ---------- modules ----------
+(function modules() {
+  const box = document.getElementById('modules');
+  box.append(el('div', { class: 'mod mod-head' }, el('div', { text: 'Module' }), el('div', { text: 'Progress' }),
+    el('div', { class: 'num', text: 'Done' }), el('div', { class: 'num opt', text: 'Quiz' }), el('div', { class: 'num opt', text: 'Conf.' })));
+  for (const m of DATA.modules) {
+    const pct = m.total ? Math.round(100 * m.done / m.total) : 0;
+    const bar = el('div', { class: 'meter', role: 'img', 'aria-label': `${pct}%` }, el('span', { style: `width:${pct}%` }));
+    const row = el('div', { class: 'mod' }, el('div', { text: `${m.id} ${m.title}` }), bar,
+      el('div', { class: 'num', text: `${m.done}/${m.total}` }),
+      el('div', { class: 'num opt', text: m.avg_score == null ? '—' : m.avg_score + '%' }),
+      el('div', { class: 'num opt', text: m.avg_confidence == null ? '—' : m.avg_confidence + '/5' }));
+    row.addEventListener('pointermove', ev => showTip(ev, `${pct}%`, `${m.id} ${m.title}`, `${m.done} of ${m.total} topics · ${m.in_progress} in progress`));
+    row.addEventListener('pointerleave', hideTip);
+    box.append(row);
+  }
+})();
+
+// ---------- quiz chart (single series, crosshair tooltip) ----------
+(function quizChart() {
+  const box = document.getElementById('quiz-chart'), byDay = new Map();
+  for (const q of DATA.quizzes) {
+    const d = byDay.get(q.date) || { date: q.date, sum: 0, n: 0, reviews: 0, conf: 0 };
+    d.sum += q.score; d.n++; d.conf += q.confidence; if (q.review) d.reviews++;
+    byDay.set(q.date, d);
+  }
+  const Q = [...byDay.values()].sort((a, b) => a.date < b.date ? -1 : 1)
+    .map(d => ({ ...d, score: Math.round(d.sum / d.n), conf: Math.round(10 * d.conf / d.n) / 10 }));
+  if (!Q.length) { box.style.height = 'auto'; box.append(el('div', { class: 'empty', text: 'Scores appear here after your first /quiz.' })); return; }
+  function draw() {
+    box.replaceChildren();
+    const W = box.clientWidth, H = box.clientHeight, m = { l: 32, r: 12, t: 8, b: 24 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const x = i => m.l + (Q.length === 1 ? iw / 2 : (i * iw) / (Q.length - 1));
+    const y = v => m.t + ih - (v / 100) * ih;
+    const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Quiz scores over time' });
+    for (const v of [0, 25, 50, 75, 100]) {
+      svg.append(s('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: v === 0 ? 'var(--axis)' : 'var(--grid)', 'stroke-width': 1 }));
+      const t = s('text', { x: m.l - 6, y: y(v) + 4, 'text-anchor': 'end', fill: 'var(--muted)', 'font-size': 11 }); t.textContent = v; svg.append(t);
+    }
+    const pass = DATA.pass_score;
+    svg.append(s('line', { x1: m.l, x2: W - m.r, y1: y(pass), y2: y(pass), stroke: 'var(--muted)', 'stroke-width': 1 }));
+    const pl = s('text', { x: m.l + 4, y: y(pass) - 4, 'text-anchor': 'start', fill: 'var(--muted)', 'font-size': 11 }); pl.textContent = `pass ${pass}`; svg.append(pl);
+    for (const [i, anchor] of [[0, 'start'], [Q.length - 1, 'end']]) {
+      if (Q.length === 1 && i) break;
+      const t = s('text', { x: x(i), y: H - 6, 'text-anchor': Q.length === 1 ? 'middle' : anchor, fill: 'var(--muted)', 'font-size': 11 });
+      t.textContent = fmtDate(Q[i].date); svg.append(t);
+    }
+    if (Q.length > 1) svg.append(s('path', { d: Q.map((q, i) => `${i ? 'L' : 'M'}${x(i)},${y(q.score)}`).join(''), fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+    Q.forEach((q, i) => svg.append(s('circle', { cx: x(i), cy: y(q.score), r: 4, fill: 'var(--accent)', stroke: 'var(--surface)', 'stroke-width': 2 })));
+    const last = Q[Q.length - 1];
+    const lv = s('text', { x: x(Q.length - 1), y: y(last.score) - 10, 'text-anchor': Q.length === 1 ? 'middle' : 'end', fill: 'var(--ink)', 'font-size': 12, 'font-weight': 600 });
+    lv.textContent = last.score + '%'; svg.append(lv);
+    const cross = s('line', { y1: m.t, y2: m.t + ih, stroke: 'var(--axis)', 'stroke-width': 1, visibility: 'hidden' });
+    const ring = s('circle', { r: 6, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2, visibility: 'hidden' });
+    svg.append(cross, ring);
+    const hit = s('rect', { x: m.l - 8, y: 0, width: iw + 16, height: H, fill: 'transparent' });
+    hit.addEventListener('pointermove', ev => {
+      const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width);
+      const i = Q.length === 1 ? 0 : Math.max(0, Math.min(Q.length - 1, Math.round(((px - m.l) / iw) * (Q.length - 1))));
+      const q = Q[i];
+      for (const [k, v] of [['x1', x(i)], ['x2', x(i)]]) cross.setAttribute(k, v);
+      cross.setAttribute('visibility', 'visible');
+      ring.setAttribute('cx', x(i)); ring.setAttribute('cy', y(q.score)); ring.setAttribute('visibility', 'visible');
+      showTip(ev, `${q.score}%`, fmtLong(q.date), `${q.n} quiz${q.n > 1 ? 'zes' : ''}: ${q.n - q.reviews} first, ${q.reviews} review`, `avg confidence ${q.conf}/5`);
+    });
+    hit.addEventListener('pointerleave', () => { cross.setAttribute('visibility', 'hidden'); ring.setAttribute('visibility', 'hidden'); hideTip(); });
+    svg.append(hit);
+    box.append(svg);
+  }
+  draw();
+  new ResizeObserver(() => draw()).observe(box);
+})();
+
+// ---------- topics table ----------
+(function table() {
+  const STATUS = {
+    done: ['✓', 'Done'], 'in-progress': ['◐', 'In progress'], todo: ['○', 'To do'], due: ['↺', 'Review due'], weak: ['!', 'Weak'],
+  };
+  const tag = t => t.status === 'done' ? (t.due ? 'due' : t.weak ? 'weak' : 'done') : t.status;
+  let filter = 'all', query = '';
+  const filters = document.getElementById('filters');
+  const counts = { all: DATA.topics.length };
+  for (const t of DATA.topics) { counts[t.status] = (counts[t.status] || 0) + 1; if (t.due) counts.due = (counts.due || 0) + 1; }
+  const chips = [['all', 'All'], ['todo', 'To do'], ['in-progress', 'In progress'], ['done', 'Done'], ['due', 'Review due']].map(([k, l]) => {
+    const b = el('button', { class: 'chip', type: 'button', 'aria-pressed': String(k === filter), text: `${l} ${counts[k] || 0}` });
+    b.addEventListener('click', () => { filter = k; chips.forEach(c => c.setAttribute('aria-pressed', String(c === b))); render(); });
+    return b;
+  });
+  const search = el('input', { class: 'search', type: 'search', placeholder: 'Search topics', 'aria-label': 'Search topics' });
+  search.addEventListener('input', () => { query = search.value.toLowerCase(); render(); });
+  filters.append(...chips, search);
+
+  const tbl = document.getElementById('topics');
+  tbl.append(el('thead', {}, el('tr', {}, ['#', 'Topic', 'Module', 'Difficulty', 'Est.', 'Status', 'Score', 'Conf.', 'Next review'].map((h, i) =>
+    el('th', { text: h, style: [0, 4, 6, 7].includes(i) ? 'text-align:right' : '' })))));
+  const body = el('tbody'); tbl.append(body);
+  function render() {
+    const rows = DATA.topics.filter(t =>
+      (filter === 'all' || (filter === 'due' ? t.due : t.status === filter)) &&
+      (!query || (t.title + ' ' + t.id + ' ' + t.module).toLowerCase().includes(query)));
+    body.replaceChildren(...rows.map(t => {
+      const [icon, label] = STATUS[tag(t)];
+      return el('tr', {},
+        el('td', { class: 'n', text: t.n }),
+        el('td', {}, el('div', { text: t.title }), el('div', { class: 'mono', text: t.id })),
+        el('td', { text: t.module }),
+        el('td', {}, el('span', { class: 'dots', text: dots(t.difficulty), 'aria-label': `difficulty ${t.difficulty} of 5` })),
+        el('td', { class: 'n', text: t.minutes + 'm' }),
+        el('td', { class: `status s-${tag(t)}` }, el('b', { text: icon, 'aria-hidden': 'true' }), label),
+        el('td', { class: 'n', text: t.last_score == null ? '—' : t.last_score + '%' }),
+        el('td', { class: 'n', text: t.confidence == null ? '—' : t.confidence + '/5' }),
+        el('td', { text: t.next_review ? fmtDate(t.next_review) : '—' }));
+    }));
+    if (!rows.length) body.append(el('tr', {}, el('td', { colspan: '9', class: 'empty', text: 'No topics match.' })));
+  }
+  render();
+})();
+</script>
+</body>
+</html>

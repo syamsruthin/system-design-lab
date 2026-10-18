@@ -1,0 +1,18 @@
+[project]
+name = "system-design-lab"
+version = "0.1.0"
+description = "Hands-on system design: concept explanations, ELI5 analogies and runnable Python + Docker labs."
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+# Lessons add their own libraries here as they need them (`uv add redis`, `uv add fastapi`, ...).
+
+[tool.pytest.ini_options]
+addopts = "-q"
