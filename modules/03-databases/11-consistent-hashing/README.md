@@ -109,43 +109,19 @@ clockwise of it, so about 1/5 of the keys move, **all of them to node-E**.
 
 ## Implementation
 
-[`src/ring.py`](src/ring.py) has everything, in about 100 lines.
+Everything lives in [`src/ring.py`](src/ring.py) (about 100 lines). The key ideas:
 
-**A stable hash, mapped onto a 2⁶⁴ ring:**
+- **`stable_hash`** turns a key or vnode name into a position on a 2⁶⁴ ring, using MD5 (the same on every machine).
+- **The ring is a sorted list of vnode positions**, plus a dict from position to server.
+- **Lookup is one line:** `bisect_left(positions, hash(key)) % len(positions)`. Binary search finds
+  "the first vnode clockwise", and the `%` wraps past 360° back to the start.
+- **Replicas** keep walking clockwise, skipping vnodes of servers already chosen.
 
-```python
-def stable_hash(value: str) -> int:
-    return int.from_bytes(hashlib.md5(value.encode()).digest()[:8], "big")
-```
+[`src/demo.py`](src/demo.py) runs four experiments against a `ModuloRouter` baseline.
+[`tests/test_ring.py`](tests/test_ring.py) proves the defining properties.
 
-**Vnodes in a sorted array.** Each server is hashed `vnodes × weight` times:
-
-```python
-for i in range(self.vnodes * weight):
-    pos = stable_hash(f"{node}#{i}")
-    self._owners[pos] = (node, i)
-    bisect.insort(self._positions, pos)
-```
-
-**Lookup = binary search + wrap-around.** This is the whole "clockwise" idea in one line:
-
-```python
-bisect.bisect_left(self._positions, stable_hash(key)) % len(self._positions)
-```
-
-**Replicas = keep walking, skipping repeat servers.** Several of a server's vnodes can sit next to
-each other, so we de-duplicate by *physical* node:
-
-```python
-for step in range(len(self._positions)):
-    node = self._owners[self._positions[(start + step) % len(self._positions)]][0]
-    if node not in out: out.append(node)
-```
-
-[`src/demo.py`](src/demo.py) runs four experiments on 100,000 keys, comparing against a `ModuloRouter`
-baseline. [`tests/test_ring.py`](tests/test_ring.py) pins down the defining properties: ≈1/N movement,
-moved keys only go to the new node, removal only moves the dead node's keys, vnodes improve balance,
-weights scale ownership, and replicas are distinct.
+**Full explanation of the code, with a traced lookup, Python techniques and exercises:
+[CODE_WALKTHROUGH.md](CODE_WALKTHROUGH.md).**
 
 ## Run it
 

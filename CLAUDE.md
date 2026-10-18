@@ -26,7 +26,8 @@ topic list; `config.yaml` holds pacing. After editing the curriculum, run
 `uv run python scripts/tracker.py info <topic>` gives the folder (`modules/NN-module/NN-topic/`).
 
 ```
-README.md            # follows templates/lesson.md exactly
+README.md            # the concept: follows templates/lesson.md exactly
+CODE_WALKTHROUGH.md  # the code, file by file: follows templates/code-walkthrough.md
 Makefile             # up, run, test, down (up/down are no-ops if no Docker)
 docker-compose.yml   # only if infra is needed
 src/                 # concept implementation + demo script
@@ -43,6 +44,13 @@ tests/               # pytest tests that PROVE the concept's behaviour
   Precise vocabulary; define each term the first time it appears. Link to earlier lessons by path.
 - Concise. No filler, no marketing tone. Prefer tables and numbered steps over long paragraphs.
 - Quiz answers go inside `<details>` so the learner can self-test.
+- **CODE_WALKTHROUGH.md** teaches the code the way README teaches the concept: file map with
+  reading order, call-graph diagram, block-by-block excerpts (≤ 15 lines each) with "what it does",
+  "why this way" and notes on non-obvious lines, what each test proves, a trace of one real input
+  with real intermediate values, Python techniques used, design alternatives, and 3 "change it
+  yourself" exercises with hints. Link code by line (`src/x.py#L42`). Write it after the code is
+  final, so line links are right. README's Implementation section stays a short overview that
+  links to it.
 
 ## Code rules
 

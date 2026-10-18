@@ -20,12 +20,15 @@ Run `uv run python scripts/tracker.py info "$ARGUMENTS"`. Note `id`, `title`, `m
 ## 2. Existing lesson → verify, don't rebuild
 
 If `lesson_exists` is true: run the lesson (step 5), confirm the output still matches the README,
-fix any drift, run `tracker.py start <id>`, and go to step 7.
+fix any drift. If `CODE_WALKTHROUGH.md` is missing (lessons built before it existed), write it now
+(step 5b) and make README's Implementation section a short overview that links to it. Then run
+`tracker.py start <id>` and go to step 7.
 
 ## 3. Prepare
 
-- Read `CLAUDE.md` (rules), `templates/lesson.md` (structure) and the reference lesson
-  `modules/03-databases/11-consistent-hashing/README.md` (target depth and tone).
+- Read `CLAUDE.md` (rules), `templates/lesson.md` and `templates/code-walkthrough.md` (structure),
+  and the reference lesson `modules/03-databases/11-consistent-hashing/` (its README.md and
+  CODE_WALKTHROUGH.md set the target depth and tone).
 - Read the TL;DR of each prerequisite lesson that exists, so the new lesson can link back
   to them ("builds on [Sharding](../10-sharding/README.md)").
 - Scale depth with `difficulty`: 1–2 is focused and short; 4–5 goes deep, with a longer
@@ -35,6 +38,7 @@ fix any drift, run `tracker.py start <id>`, and go to step 7.
 
 ```
 README.md            # every section of templates/lesson.md, in order, nothing skipped
+CODE_WALKTHROUGH.md  # every section of templates/code-walkthrough.md (written in step 5b)
 Makefile             # copy templates/Makefile unchanged
 docker-compose.yml   # only if docker: true
 src/__init__.py
@@ -64,6 +68,14 @@ Fix until `run` produces clean output and all tests pass. Then paste the **actua
 output into "Expected output" and explain what each part shows. Never write output you didn't
 see.
 
+### 5b. Write CODE_WALKTHROUGH.md (code is final now)
+
+- Get line numbers with `grep -n` so every `#L` link points at the right line.
+- For "Trace one run", actually run the input through the code
+  (`uv run python -c "from src.<concept> import ...; ..."` from the lesson folder) and use the
+  printed values. Don't compute them in your head.
+- Exercises must be doable in the lesson's own files, each with a way to check it worked.
+
 ## 6. Quality check before presenting
 
 - [ ] ELI5 has an analogy, a mapping table from analogy to components, and a named real system
@@ -72,6 +84,8 @@ see.
 - [ ] Tests prove the property; randomness seeded; output reproducible
 - [ ] Break-it has exact steps and what to watch for
 - [ ] 3 interview Q&As; 5 quiz questions with answers in `<details>`
+- [ ] CODE_WALKTHROUGH.md: every src/ and tests/ file covered, line links correct, trace uses
+      real values, 3 exercises with hints
 - [ ] Infra stopped (`make down`)
 
 ## 7. Mark started and hand over
@@ -81,7 +95,8 @@ Run `uv run python scripts/tracker.py start <id>`, then tell the learner, in abo
 - the TL;DR and the ELI5 analogy in one line each
 - what the demo proves (one striking number from the real output)
 - the Break-it experiment to try
-- the lesson link, as a markdown link to `<path>/README.md`
-- next step: "Study it, run it yourself, try Break it, then `/quiz <id>`."
+- the lesson links: `<path>/README.md` (concept) and `<path>/CODE_WALKTHROUGH.md` (code)
+- next step: "Read the README, then the code walkthrough, run it yourself, try Break it, then
+  `/quiz <id>`."
 
 Do not mark the topic done. The learner does that with `/done` after the quiz.

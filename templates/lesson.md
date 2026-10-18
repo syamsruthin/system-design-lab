@@ -35,7 +35,8 @@
 
 ## Implementation
 
-<!-- Walk through the key parts of src/ with short excerpts. Explain the design choices. -->
+<!-- Short overview only (5–8 lines): which file holds what, and the 2–3 key ideas in the code.
+     End with: "Full line-by-line explanation: [CODE_WALKTHROUGH.md](CODE_WALKTHROUGH.md)." -->
 
 ## Run it
 

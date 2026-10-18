@@ -35,11 +35,13 @@ Each folder in `modules/` is one topic:
 | Explain like I'm 5 | An everyday analogy, mapped back to the real components, plus a named real system |
 | Technical deep dive | Mechanics, Mermaid diagram, trade-offs, failure modes, when *not* to use it |
 | Implementation | The concept implemented from scratch in Python |
+| **Code walkthrough** | A separate `CODE_WALKTHROUGH.md`: every file explained block by block, a traced run with real values, Python techniques used, and exercises to extend the code |
 | Run it / Expected output | `make run`, with the real output and what it shows |
 | Break it | An experiment that exposes the failure mode |
 | Interview angle + quiz | 3 interview Q&As and a 5-question self-check |
 
-Reference lesson: [Consistent Hashing](modules/03-databases/11-consistent-hashing/README.md).
+Reference lesson: [Consistent Hashing](modules/03-databases/11-consistent-hashing/README.md) and its
+[code walkthrough](modules/03-databases/11-consistent-hashing/CODE_WALKTHROUGH.md).
 
 ## Daily workflow (Claude Code)
 
@@ -103,7 +105,7 @@ config.yaml            pacing and spaced-repetition settings
 progress.json          your state (written only by scripts/tracker.py)
 scripts/tracker.py     planner and progress CLI
 scripts/build_dashboard.py   writes docs/index.html and the table above
-templates/lesson.md    lesson skeleton
+templates/             lesson.md and code-walkthrough.md skeletons, lesson Makefile
 modules/               the lessons
 .claude/skills/        /today /next /learn /quiz /done /revise
 ```
