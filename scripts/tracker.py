@@ -535,7 +535,8 @@ def main(argv: list[str] | None = None) -> None:
             "id": t.id, "title": t.title, "module": f"{t.module_id} {t.module_title}",
             "difficulty": t.difficulty, "minutes": t.minutes, "docker": t.docker, "tools": t.tools,
             "prereqs": {p: lab.entry(p)["status"] for p in t.prereqs},
-            "path": t.rel_path, "lesson_exists": (t.path / "README.md").exists(), **e,
+            "path": t.rel_path, "lesson_exists": (t.path / "README.md").exists(),
+            **{("minutes_spent" if k == "minutes" else k): v for k, v in e.items()},  # keep the estimate visible
         }, indent=2))
     elif a.cmd == "sync":
         lab.save()
