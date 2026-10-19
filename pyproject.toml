@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Hands-on system design: concept explanations, ELI5 analogies and runnable Python + Docker labs."
 requires-python = ">=3.11"
 dependencies = [
+    "dnspython>=2.9.0",
     "fastapi>=0.143.3",
     "httpx>=0.28.1",
     "pyyaml>=6.0",
