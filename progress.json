@@ -2,14 +2,21 @@
   "version": 1,
   "topics": {
     "how-the-web-works": {
-      "status": "todo",
-      "started": null,
-      "completed": null,
-      "minutes": null,
-      "quiz": [],
-      "confidence": null,
+      "status": "done",
+      "started": "2026-10-18",
+      "completed": "2026-10-19",
+      "minutes": 20,
+      "quiz": [
+        {
+          "date": "2026-10-19",
+          "score": 100,
+          "confidence": 4,
+          "review": false
+        }
+      ],
+      "confidence": 4,
       "reviews": 0,
-      "next_review": null
+      "next_review": "2026-10-20"
     },
     "dns": {
       "status": "todo",
@@ -842,5 +849,29 @@
       "next_review": null
     }
   },
-  "log": []
+  "log": [
+    {
+      "date": "2026-10-18",
+      "ts": "2026-10-18T14:40:13+05:30",
+      "event": "start",
+      "topic": "how-the-web-works"
+    },
+    {
+      "date": "2026-10-19",
+      "ts": "2026-10-19T08:51:16+05:30",
+      "event": "quiz",
+      "topic": "how-the-web-works",
+      "score": 100,
+      "confidence": 4,
+      "review": false,
+      "minutes": 0
+    },
+    {
+      "date": "2026-10-19",
+      "ts": "2026-10-19T08:52:16+05:30",
+      "event": "done",
+      "topic": "how-the-web-works",
+      "minutes": 20
+    }
+  ]
 }
