@@ -12,11 +12,17 @@
           "score": 100,
           "confidence": 4,
           "review": false
+        },
+        {
+          "date": "2026-10-20",
+          "score": 100,
+          "confidence": 4,
+          "review": true
         }
       ],
       "confidence": 4,
-      "reviews": 0,
-      "next_review": "2026-10-20"
+      "reviews": 1,
+      "next_review": "2026-10-23"
     },
     "dns": {
       "status": "done",
@@ -29,11 +35,17 @@
           "score": 100,
           "confidence": 4,
           "review": false
+        },
+        {
+          "date": "2026-10-20",
+          "score": 100,
+          "confidence": 4,
+          "review": true
         }
       ],
       "confidence": 4,
-      "reviews": 0,
-      "next_review": "2026-10-20"
+      "reviews": 1,
+      "next_review": "2026-10-23"
     },
     "http-rest": {
       "status": "done",
@@ -932,6 +944,26 @@
       "event": "done",
       "topic": "http-rest",
       "minutes": 30
+    },
+    {
+      "date": "2026-10-20",
+      "ts": "2026-10-20T17:34:49+05:30",
+      "event": "quiz",
+      "topic": "how-the-web-works",
+      "score": 100,
+      "confidence": 4,
+      "review": true,
+      "minutes": 15
+    },
+    {
+      "date": "2026-10-20",
+      "ts": "2026-10-20T17:39:13+05:30",
+      "event": "quiz",
+      "topic": "dns",
+      "score": 100,
+      "confidence": 4,
+      "review": true,
+      "minutes": 15
     }
   ]
 }

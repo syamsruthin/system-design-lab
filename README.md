@@ -9,7 +9,7 @@ run and break yourself (Python + Docker, all free tools).
 <!-- PROGRESS:START -->
 ![progress](https://img.shields.io/badge/progress-3.6%25-2a78d6)
 
-**3/84 topics** · 1.3 h studied · streak 3 day(s) · avg quiz 100% · projected finish **2026-12-06**
+**3/84 topics** · 1.8 h studied · streak 3 day(s) · avg quiz 100% · projected finish **2026-12-06**
 
 | Module | Progress | Done | Avg quiz |
 |---|---|---|---|
