@@ -36,14 +36,21 @@
       "next_review": "2026-10-20"
     },
     "http-rest": {
-      "status": "todo",
-      "started": null,
-      "completed": null,
-      "minutes": null,
-      "quiz": [],
-      "confidence": null,
+      "status": "done",
+      "started": "2026-10-19",
+      "completed": "2026-10-20",
+      "minutes": 30,
+      "quiz": [
+        {
+          "date": "2026-10-20",
+          "score": 100,
+          "confidence": 4,
+          "review": false
+        }
+      ],
+      "confidence": 4,
       "reviews": 0,
-      "next_review": null
+      "next_review": "2026-10-21"
     },
     "rest-grpc-graphql": {
       "status": "todo",
@@ -901,6 +908,29 @@
       "ts": "2026-10-19T15:50:40+05:30",
       "event": "done",
       "topic": "dns",
+      "minutes": 30
+    },
+    {
+      "date": "2026-10-19",
+      "ts": "2026-10-19T16:01:40+05:30",
+      "event": "start",
+      "topic": "http-rest"
+    },
+    {
+      "date": "2026-10-20",
+      "ts": "2026-10-20T17:24:09+05:30",
+      "event": "quiz",
+      "topic": "http-rest",
+      "score": 100,
+      "confidence": 4,
+      "review": false,
+      "minutes": 0
+    },
+    {
+      "date": "2026-10-20",
+      "ts": "2026-10-20T17:24:43+05:30",
+      "event": "done",
+      "topic": "http-rest",
       "minutes": 30
     }
   ]
