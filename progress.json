@@ -65,14 +65,21 @@
       "next_review": "2026-10-21"
     },
     "rest-grpc-graphql": {
-      "status": "todo",
-      "started": null,
-      "completed": null,
-      "minutes": null,
-      "quiz": [],
-      "confidence": null,
+      "status": "done",
+      "started": "2026-10-21",
+      "completed": "2026-10-23",
+      "minutes": 40,
+      "quiz": [
+        {
+          "date": "2026-10-23",
+          "score": 100,
+          "confidence": 4,
+          "review": false
+        }
+      ],
+      "confidence": 4,
       "reviews": 0,
-      "next_review": null
+      "next_review": "2026-10-24"
     },
     "latency-throughput": {
       "status": "todo",
@@ -964,6 +971,29 @@
       "confidence": 4,
       "review": true,
       "minutes": 15
+    },
+    {
+      "date": "2026-10-21",
+      "ts": "2026-10-21T09:15:14+05:30",
+      "event": "start",
+      "topic": "rest-grpc-graphql"
+    },
+    {
+      "date": "2026-10-23",
+      "ts": "2026-10-23T00:23:31+05:30",
+      "event": "quiz",
+      "topic": "rest-grpc-graphql",
+      "score": 100,
+      "confidence": 4,
+      "review": false,
+      "minutes": 0
+    },
+    {
+      "date": "2026-10-23",
+      "ts": "2026-10-23T00:23:55+05:30",
+      "event": "done",
+      "topic": "rest-grpc-graphql",
+      "minutes": 40
     }
   ]
 }
