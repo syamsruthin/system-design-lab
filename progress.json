@@ -82,14 +82,21 @@
       "next_review": "2026-10-24"
     },
     "latency-throughput": {
-      "status": "todo",
-      "started": null,
-      "completed": null,
-      "minutes": null,
-      "quiz": [],
-      "confidence": null,
+      "status": "done",
+      "started": "2026-10-23",
+      "completed": "2026-10-25",
+      "minutes": 35,
+      "quiz": [
+        {
+          "date": "2026-10-25",
+          "score": 100,
+          "confidence": 4,
+          "review": false
+        }
+      ],
+      "confidence": 4,
       "reviews": 0,
-      "next_review": null
+      "next_review": "2026-10-26"
     },
     "back-of-envelope": {
       "status": "todo",
@@ -994,6 +1001,29 @@
       "event": "done",
       "topic": "rest-grpc-graphql",
       "minutes": 40
+    },
+    {
+      "date": "2026-10-23",
+      "ts": "2026-10-23T00:33:28+05:30",
+      "event": "start",
+      "topic": "latency-throughput"
+    },
+    {
+      "date": "2026-10-25",
+      "ts": "2026-10-25T21:29:53+05:30",
+      "event": "quiz",
+      "topic": "latency-throughput",
+      "score": 100,
+      "confidence": 4,
+      "review": false,
+      "minutes": 0
+    },
+    {
+      "date": "2026-10-25",
+      "ts": "2026-10-25T21:31:04+05:30",
+      "event": "done",
+      "topic": "latency-throughput",
+      "minutes": 35
     }
   ]
 }

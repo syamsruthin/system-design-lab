@@ -7,13 +7,13 @@ run and break yourself (Python + Docker, all free tools).
 **[📊 Progress dashboard](https://syamsruthin.github.io/system-design-lab/)**
 
 <!-- PROGRESS:START -->
-![progress](https://img.shields.io/badge/progress-4.8%25-2a78d6)
+![progress](https://img.shields.io/badge/progress-6.0%25-2a78d6)
 
-**4/84 topics** · 2.5 h studied · streak 1 day(s) · avg quiz 100% · projected finish **2026-12-06**
+**5/84 topics** · 3.1 h studied · streak 1 day(s) · avg quiz 100% · projected finish **2026-12-10**
 
 | Module | Progress | Done | Avg quiz |
 |---|---|---|---|
-| 00 Foundations | `▓▓▓▓▓░░░░░` | 4/8 | 100% |
+| 00 Foundations | `▓▓▓▓▓▓░░░░` | 5/8 | 100% |
 | 01 Scaling & Traffic | `░░░░░░░░░░` | 0/6 | — |
 | 02 Caching | `░░░░░░░░░░` | 0/6 | — |
 | 03 Databases | `░░░░░░░░░░` | 0/11 | — |
