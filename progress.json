@@ -99,14 +99,21 @@
       "next_review": "2026-10-26"
     },
     "back-of-envelope": {
-      "status": "todo",
-      "started": null,
-      "completed": null,
-      "minutes": null,
-      "quiz": [],
-      "confidence": null,
+      "status": "done",
+      "started": "2026-10-25",
+      "completed": "2026-10-30",
+      "minutes": 35,
+      "quiz": [
+        {
+          "date": "2026-10-30",
+          "score": 100,
+          "confidence": 4,
+          "review": false
+        }
+      ],
+      "confidence": 4,
       "reviews": 0,
-      "next_review": null
+      "next_review": "2026-10-31"
     },
     "cap-pacelc": {
       "status": "todo",
@@ -1023,6 +1030,29 @@
       "ts": "2026-10-25T21:31:04+05:30",
       "event": "done",
       "topic": "latency-throughput",
+      "minutes": 35
+    },
+    {
+      "date": "2026-10-25",
+      "ts": "2026-10-25T21:40:37+05:30",
+      "event": "start",
+      "topic": "back-of-envelope"
+    },
+    {
+      "date": "2026-10-30",
+      "ts": "2026-10-30T13:31:03+05:30",
+      "event": "quiz",
+      "topic": "back-of-envelope",
+      "score": 100,
+      "confidence": 4,
+      "review": false,
+      "minutes": 0
+    },
+    {
+      "date": "2026-10-30",
+      "ts": "2026-10-30T13:31:34+05:30",
+      "event": "done",
+      "topic": "back-of-envelope",
       "minutes": 35
     }
   ]
